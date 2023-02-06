@@ -10,15 +10,17 @@ contract Contract2 {
 
     string stock;
     address add;
+    uint _id;
 
-    function callEmitEvent(string memory name_ofStock, address sender) public returns (string memory, address) {
+    function callEmitEvent(string memory name_ofStock, address sender) public returns (string memory, address, uint) {
         stock = name_ofStock;
         add = sender;
         c1.add(name_ofStock,sender);
+        _id = c1.id();
         return c1.add(name_ofStock,sender);
     }
 
-    function get() public view returns(string memory, address){
-        return(stock,add);
+    function get() public view returns(string memory, address, uint ){
+        return(stock,add, _id);
     }
 }

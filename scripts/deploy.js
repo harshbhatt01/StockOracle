@@ -28,6 +28,7 @@ async function main() {
   // const data = abc
   const Name_of_Stock = data[0]
   const address_of_sender = data[1]
+  const id = data[2]
   //console.log(h[0]);
   const transactionResponse = await _api.add(Name_of_Stock,address_of_sender)
   const transactionReceipt = await transactionResponse.wait()
@@ -37,7 +38,7 @@ async function main() {
 
 
   try {
-        Name = transactionReceipt.events[0].args.name_ofStock
+        Name = transactionReceipt.events[0].args.name_ofStock;
         const apiKey = 'uVkr9z1EwjmDoCJyI1XjeKFBo8KF5B1m';
         const StockAPI = `https://api.polygon.io/v1/open-close/${Name}/2023-01-09?adjusted=true&apiKey=${apiKey}`
         const response = await axios.get(StockAPI);
@@ -46,11 +47,11 @@ async function main() {
         open_ = StockData.open.toString();
         high_ = StockData.high.toString();
         low_ = StockData.low.toString();
-        console.log(open_, high_, low_); 
+        console.log(open_, high_, low_,id);
         
-        const updateData = await _api.storeStockData(Name,open_,high_,low_)
+        const updateData = await _api.storeStockData(open_,high_,low_, id)
         //console.log(updateData);
-        const finalData = await _api.getStockData(Name)
+        const finalData = await _api.getStockData(id)
         console.log(finalData)
 
   } catch (e) {
