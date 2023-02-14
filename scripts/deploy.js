@@ -23,7 +23,8 @@ async function main() {
     "Contract_Address :", contract2.address
   );
 
-  const xyz = await contract2.callEmitEvent("TSLA","0x2546BcD3c84621e976D8185a91A922aE77ECEc30")
+  const estimate = await contract2.estimateGas.callEmitEvent("TSLA","0x2546BcD3c84621e976D8185a91A922aE77ECEc30",{value:ethers.utils.parseEther("2.0")})
+  const xyz = await contract2.callEmitEvent("TSLA","0x2546BcD3c84621e976D8185a91A922aE77ECEc30",{value:ethers.utils.parseEther("2"), gasLimit : 300000})
   const data = await contract2.get()
   // const data = abc
   const Name_of_Stock = data[0]

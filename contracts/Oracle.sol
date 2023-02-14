@@ -9,25 +9,35 @@ contract Oracle {
     }
 
     mapping(uint => dataStruct) public data;
+    address public payer;
 
     struct Co_ordinates{
         string name_ofStock;
         address sender;
     }
 
-    uint public id = 0;
-    event Updatedinput(string name_ofStock, address sender, uint id);
+    int public id = -1;
+    event Updatedinput(string name_ofStock, address sender, int id);
 
+    modifier onlyPayer{
+        require(msg.sender == payer);
+        _;
+    }
     
     Co_ordinates[] public people;
 
-    function add(string memory name_ofStock, address sender) public returns (string memory,address,uint){
+    function add(string memory name_ofStock, address sender) public onlyPayer returns (string memory,address,int){
         people.push(Co_ordinates({name_ofStock : name_ofStock,sender : sender}));
         id++;
         emit Updatedinput(name_ofStock,sender,id);
         return (name_ofStock,sender,id);
     }
 
+    function payForStockData(address _address) public payable returns(bool){
+        require(msg.value >= 1 ether, "Payment must be at least 1 ether");
+        payer = _address;
+        return true;
+    }
     function storeStockData(string memory open, string memory high, string memory low, uint _id) public {
         data[_id] = dataStruct(open,high,low);
     }
