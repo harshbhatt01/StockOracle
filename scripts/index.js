@@ -36,6 +36,10 @@ async function getStockData(){
           const updateData = await oracleContract.storeStockData(open_,high_,low_, id)
           const finalData = await oracleContract.getStockData(id)
           console.log(finalData)
+
+        //retreving back in user's contract
+        const getdata = await userContract.retreiveData(id)
+        console.log(getdata);
   
     } catch (e) {
       console.error(e);
