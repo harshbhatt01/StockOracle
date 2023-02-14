@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 import "./Oracle.sol";
+
 contract Contract2 {
     Oracle c1;
     bool payment;
@@ -14,8 +15,8 @@ contract Contract2 {
     address add;
     int _id;
 
-    function callEmitEvent(string memory name_ofStock, address sender) public payable returns (string memory, address, int, bool){
-        (bool success) = c1.payForStockData{value:msg.value}(msg.sender);
+    function callEmitEvent(string memory name_ofStock, address payable sender) public payable returns (string memory, address, int, bool){
+        (bool success) = c1.payForStockData{value:msg.value}();
 
         stock = name_ofStock;
         add = sender;
@@ -31,5 +32,4 @@ contract Contract2 {
     function retreiveData(uint id) public view returns(string memory, string memory,string memory){
         return c1.getStockData(id);
     }
-
 }

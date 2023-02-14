@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
-contract Oracle {
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract Oracle is Ownable {
 
     struct dataStruct {
         string _open;
@@ -20,29 +22,29 @@ contract Oracle {
     event Updatedinput(string name_ofStock, address sender, int id);
 
     modifier onlyPayer{
-        require(msg.sender == payer);
+        require(tx.origin == payer, "Not the payer broooo");
         _;
     }
     
     Co_ordinates[] public people;
 
-    function add(string memory name_ofStock, address sender) public onlyPayer returns (string memory,address,int){
+    function add(string memory name_ofStock, address payable sender) public onlyPayer returns (string memory,address,int){
         people.push(Co_ordinates({name_ofStock : name_ofStock,sender : sender}));
         id++;
         emit Updatedinput(name_ofStock,sender,id);
         return (name_ofStock,sender,id);
     }
 
-    function payForStockData(address _address) public payable returns(bool){
+    function payForStockData() public payable returns(bool){
         require(msg.value >= 1 ether, "Payment must be at least 1 ether");
-        payer = _address;
+        payer = payable(tx.origin);
         return true;
     }
-    function storeStockData(string memory open, string memory high, string memory low, uint _id) public {
+    function storeStockData(string memory open, string memory high, string memory low, uint _id) onlyOwner public {
         data[_id] = dataStruct(open,high,low);
     }
 
-    function getStockData(uint _id) public view returns (string memory, string memory, string memory){
+    function getStockData(uint _id) public view onlyPayer returns (string memory, string memory, string memory){
         return( data[_id]._open, data[_id]._high, data[_id]._low);
     }
 }
