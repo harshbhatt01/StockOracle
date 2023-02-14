@@ -1,18 +1,24 @@
-
 const hre = require("hardhat");
+const axios = require('axios');
 
 async function main() {
 
-  const StockDataContract = await hre.ethers.getContractFactory("StockDataContract");
-  const _StockDataContract = await StockDataContract.deploy();
+  const api = await hre.ethers.getContractFactory("Oracle");
+  const _api = await api.deploy();
 
-  await _StockDataContract.deployed();
-  console.log(_StockDataContract.address)
+  await _api.deployed();
+
+  console.log(
+    "Oracle Address :", _api.address
+  );
+
+  const Contract2 = await hre.ethers.getContractFactory("Contract2");
+  const contract2 = await Contract2.deploy(_api.address);
+
+  await contract2.deployed();
+
+  console.log(
+    "User Contract_Address :", contract2.address
+  );
 }
-
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+main()
