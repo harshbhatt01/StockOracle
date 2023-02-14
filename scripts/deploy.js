@@ -9,7 +9,7 @@ async function main() {
   await _api.deployed();
 
   console.log(
-    " Oracle Address :", _api.address
+    "Address :", _api.address
   );
 
   const Contract2 = await hre.ethers.getContractFactory("Contract2");
@@ -18,20 +18,7 @@ async function main() {
   await contract2.deployed();
 
   console.log(
-    "User Address :", contract2.address
+    "Contract_Address :", contract2.address
   );
 }
 main()
-
-
-
-
-
-
-
-
-
-
-
-
-

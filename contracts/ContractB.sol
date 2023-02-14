@@ -11,22 +11,22 @@ contract Contract2 {
         c1 = Oracle(_c1);
     }
 
-    string stock;
-    address add;
-    int _id;
+    string public stock_symbol;
+    address public sender_address;
+    int public _id;
 
-    function callEmitEvent(string memory name_ofStock, address payable sender) public payable returns (string memory, address, int, bool){
+    function requestStockData(string memory _stock_symbol, address payable _sender_address) public payable returns (string memory, address, int, bool){
         (bool success) = c1.payForStockData{value:msg.value}();
 
-        stock = name_ofStock;
-        add = sender;
-        (string memory a, address b, int c) = c1.add(name_ofStock, sender);
+        stock_symbol = _stock_symbol;
+        sender_address = _sender_address;
+        (string memory symbol, address sender, int id) = c1.addingStockData(_stock_symbol, _sender_address);
          _id = c1.id();
-        return (a,b,c,success);
+        return (symbol,sender,id,success);
     }
 
-    function get() public view returns(string memory, address, int){
-        return(stock,add, _id);
+    function getData() public view returns(string memory, address, int){
+        return(stock_symbol,sender_address, _id);
     }
 
     function retreiveData(uint id) public view returns(string memory, string memory,string memory){

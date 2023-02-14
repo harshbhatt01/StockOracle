@@ -28,7 +28,7 @@ contract Oracle is Ownable {
     
     Co_ordinates[] public people;
 
-    function add(string memory name_ofStock, address payable sender) public onlyPayer returns (string memory,address,int){
+    function addingStockData(string memory name_ofStock, address payable sender) public onlyPayer returns (string memory,address,int){
         people.push(Co_ordinates({name_ofStock : name_ofStock,sender : sender}));
         id++;
         emit Updatedinput(name_ofStock,sender,id);
