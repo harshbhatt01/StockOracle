@@ -1,4 +1,4 @@
-const userAbi = [
+const userAbi =  [
   {
     "inputs": [
       {
@@ -75,11 +75,6 @@ const userAbi = [
         "internalType": "int256",
         "name": "",
         "type": "int256"
-      },
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
       }
     ],
     "stateMutability": "payable",
@@ -218,7 +213,7 @@ const oracleAbi = [
         "type": "int256"
       }
     ],
-    "stateMutability": "nonpayable",
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -293,21 +288,14 @@ const oracleAbi = [
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "owner",
-    "outputs": [
+    "inputs": [
       {
         "internalType": "address",
         "name": "",
         "type": "address"
       }
     ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "payForStockData",
+    "name": "isPayer",
     "outputs": [
       {
         "internalType": "bool",
@@ -315,12 +303,12 @@ const oracleAbi = [
         "type": "bool"
       }
     ],
-    "stateMutability": "payable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "payer",
+    "name": "owner",
     "outputs": [
       {
         "internalType": "address",

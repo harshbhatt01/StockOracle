@@ -5,17 +5,9 @@
     "hardhat": "^2.12.4"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@openzeppelin/contracts": "^4.8.1",
-=======
-<<<<<<< HEAD
-    "@openzeppelin/contracts": "^4.8.1",
-    "axios": "^1.3.0",
-    "ethers": "^5.4.0"
-=======
->>>>>>> 3215214270fa3acf7eed84630352d082f891110b
+    "ethers": "^5.4.0",
     "axios": "^1.3.0",
     "dotenv": "^16.0.3"
->>>>>>> 2fa52bcac804a67393033880bf56bb81a22059b7
   }
 }

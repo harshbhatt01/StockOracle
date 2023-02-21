@@ -3,22 +3,22 @@ const axios = require('axios');
 
 async function main() {
 
-  const api = await hre.ethers.getContractFactory("Oracle");
-  const _api = await api.deploy();
+  const oracle = await hre.ethers.getContractFactory("contracts/Oracle.sol:Oracle");
+  const _oracle = await oracle.deploy();
 
-  await _api.deployed();
+  await _oracle.deployed();
 
   console.log(
-    "Address :", _api.address
+    "oracel address :", _oracle.address
   );
 
-  const Contract2 = await hre.ethers.getContractFactory("Contract2");
-  const contract2 = await Contract2.deploy(_api.address);
+  const user = await hre.ethers.getContractFactory("Contract2");
+  const userContract = await user.deploy(_oracle.address);
 
-  await contract2.deployed();
+  await userContract.deployed();
 
   console.log(
-    "Contract_Address :", contract2.address
+    "User_Contract_Address :", userContract.address
   );
 }
 main()

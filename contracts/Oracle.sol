@@ -11,7 +11,7 @@ contract Oracle is Ownable {
     }
 
     mapping(uint => dataStruct) public data;
-    address public payer;
+    mapping(address => bool) public isPayer;
 
     struct Co_ordinates{
         string name_ofStock;
@@ -22,24 +22,24 @@ contract Oracle is Ownable {
     event Updatedinput(string name_ofStock, address sender, int id);
 
     modifier onlyPayer{
-        require(tx.origin == payer, "Not the payer broooo");
+        require(isPayer[tx.origin] , "Not the payer broooo");
         _;
     }
     
     Co_ordinates[] public people;
 
-    function addingStockData(string memory name_ofStock, address payable sender) public onlyPayer returns (string memory,address,int){
+    function addingStockData(string memory name_ofStock, address payable sender) public  payable returns (string memory,address,int){
+        if(!isPayer[tx.origin]){
+            require(msg.value >= 1 ether,"oracle : not a payer");
+            isPayer[tx.origin] = true;       
+        }
         people.push(Co_ordinates({name_ofStock : name_ofStock,sender : sender}));
         id++;
         emit Updatedinput(name_ofStock,sender,id);
         return (name_ofStock,sender,id);
     }
 
-    function payForStockData() public payable returns(bool){
-        require(msg.value >= 1 ether, "Payment must be at least 1 ether");
-        payer = payable(tx.origin);
-        return true;
-    }
+
     function storeStockData(string memory open, string memory high, string memory low, uint _id) onlyOwner public {
         data[_id] = dataStruct(open,high,low);
     }
